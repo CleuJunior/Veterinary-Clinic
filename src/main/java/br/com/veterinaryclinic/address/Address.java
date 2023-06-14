@@ -1,4 +1,4 @@
-package br.com.veterinaryclinic.model;
+package br.com.veterinaryclinic.address;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -42,12 +42,12 @@ public class Address implements Serializable {
 
     @Column(name = "house_number")
     @NonNull
-    private String houseNumber;
+    private Integer houseNumber;
 
-    @Column(name = "zipcode", nullable = false)
+    @Column(nullable = false)
     @NotBlank(message = "Zipcode cannot be blank.")
     @NotNull(message = "ZipCode cannot be null.")
     @NonNull
-    private String zipCode;
+    private String zipcode;
 
 }

@@ -1,5 +1,6 @@
-package br.com.veterinaryclinic.model;
+package br.com.veterinaryclinic.client;
 
+import br.com.veterinaryclinic.address.Address;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

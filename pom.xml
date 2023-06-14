@@ -12,7 +12,9 @@
 	<artifactId>veterinary-clinic</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>veterinary-clinic</name>
-	<description>A comprehensive Java repository for managing a veterinary clinic. Features include patient tracking, appointment management, medical history recording, owner registration, and report generation. Streamline your clinic&apos;s workflow with this intuitive and efficient tool.</description>
+	<description>A comprehensive Java repository for managing a veterinary clinic. Features include patient tracking,
+		appointment management, medical history recording, owner registration, and report generation. Streamline your
+		clinic&apos;s workflow with this intuitive and efficient tool.</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -37,10 +39,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.flywaydb</groupId>
-			<artifactId>flyway-core</artifactId>
-		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -53,11 +51,11 @@
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<scope>runtime</scope>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.postgresql</groupId>-->
+<!--			<artifactId>postgresql</artifactId>-->
+<!--			<scope>runtime</scope>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
