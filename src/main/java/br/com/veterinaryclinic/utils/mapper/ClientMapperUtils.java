@@ -14,7 +14,8 @@ public class ClientMapperUtils {
                 client.getName(),
                 client.getEmailAddress(),
                 client.getBirthDate(),
-                AddressMapperUtils.toAddressResponse(client.getAddress())
+                AddressMapperUtils.toAddressResponse(client.getAddress()),
+                client.getPets().stream().map(PetMapperUtils::toPetResponse).toList()
         );
 
     }

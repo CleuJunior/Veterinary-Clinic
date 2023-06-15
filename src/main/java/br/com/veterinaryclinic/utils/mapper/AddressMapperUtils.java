@@ -15,5 +15,4 @@ public class AddressMapperUtils {
                 address.getZipcode()
         );
     }
-
 }

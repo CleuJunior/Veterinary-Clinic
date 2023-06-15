@@ -1,12 +1,14 @@
 package br.com.veterinaryclinic.client;
 
 import br.com.veterinaryclinic.address.Address;
+import br.com.veterinaryclinic.pet.Pet;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -22,6 +24,7 @@ import lombok.ToString;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -66,5 +69,9 @@ public class Client implements Serializable {
     @JoinColumn(name = "address_id")
     @NonNull
     private Address address;
+
+    @OneToMany(mappedBy = "ownerName")
+    @NonNull
+    private List<Pet> pets;
 
 }

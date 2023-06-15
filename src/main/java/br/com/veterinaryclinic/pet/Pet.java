@@ -1,5 +1,6 @@
 package br.com.veterinaryclinic.pet;
 
+import br.com.veterinaryclinic.client.Client;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -7,6 +8,9 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -44,5 +48,7 @@ public class Pet implements Serializable {
     @Enumerated(EnumType.STRING)
     private AnimalGroupType type;
 
-//    private Client ownerName;
+    @ManyToOne(targetEntity = Client.class)
+    @JoinColumn(name = "owner_id")
+    private Client ownerName;
 }

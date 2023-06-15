@@ -21,7 +21,6 @@ public class ClientController {
         return ResponseEntity.status(HttpStatus.OK).body(this.service.listAllClients());
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity<ClientResponse> getClientById(@PathVariable Long id) {
         ClientResponse response = this.service.findPatientById(id);

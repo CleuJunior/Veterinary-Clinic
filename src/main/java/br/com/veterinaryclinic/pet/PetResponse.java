@@ -1,6 +1,7 @@
 package br.com.veterinaryclinic.pet;
 
 import br.com.veterinaryclinic.address.AddressResponse;
+import br.com.veterinaryclinic.client.Client;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 public record PetResponse(
         Long id,
         String name,
-        String type
+        String type,
+        Client owner
 
 ) { }

@@ -1,8 +1,6 @@
 package br.com.veterinaryclinic.pet;
 
-import br.com.veterinaryclinic.client.Client;
-import br.com.veterinaryclinic.client.ClientResponse;
-import br.com.veterinaryclinic.utils.mapper.ClientMapperUtils;
+import br.com.veterinaryclinic.utils.mapper.PetMapperUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,16 +13,19 @@ import java.util.List;
 public class PetService {
     private final PetRepository petRepository;
 
-    public List<ClientResponse> listAllPets() {
-
+    public List<PetResponse> listAllPets() {
         return this.petRepository.findAll().stream()
-                .map(ClientMapperUtils::toClientResponse)
+                .map(PetMapperUtils::toPetResponse)
                 .toList();
     }
 
-    public ClientResponse findPetById(Long id) {
-        Client client = this.petRepository.findById(id).orElse(null);
-        assert client != null;
-        return ClientMapperUtils.toClientResponse(client);
+    public PetResponse findPetById(Long id) {
+        Pet pet = this.petRepository.findById(id).orElse(null);
+        assert pet != null;
+        return PetMapperUtils.toPetResponse(pet);
+    }
+
+    public Pet savePet(Pet pet) {
+        return this.petRepository.save(pet);
     }
 }

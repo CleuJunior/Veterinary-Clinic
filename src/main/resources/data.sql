@@ -69,3 +69,39 @@ VALUES ('William Anderson', 'williamanderson@example.com', '67890123456', '1989-
 
 INSERT INTO client (name, email, cpf, birth_date, address_id)
 VALUES ('Mia Thomas', 'miathomas@example.com', '01234567890', '1997-04-12', 10);
+
+-- -------------------------------------------------------------------------------------
+--                                                                                    --
+--                  Inserção de dados na tabela PET                                   --
+--                                                                                    --
+-- -------------------------------------------------------------------------------------
+
+INSERT INTO pet (name, type, owner_id)
+VALUES ('Max', 'CANINE', 1), ('Silvestre', 'FELINE', 1);
+
+INSERT INTO pet (name, type, owner_id)
+VALUES ('Bella', 'FELINE', 2), ('Paolo', 'EQUINE', 2);
+
+INSERT INTO pet (name, type, owner_id)
+VALUES ('Charlie', 'EQUINE', 3), ('Julia', 'EQUINE', 3);
+
+INSERT INTO pet (name, type, owner_id)
+VALUES ('Luna', 'FELINE', 4), ('Sol', 'FELINE', 4);
+
+INSERT INTO pet (name, type, owner_id)
+VALUES ('Rocky', 'CANINE', 5), ('K-9', 'CANINE', 5);
+
+INSERT INTO pet (name, type, owner_id)
+VALUES ('Daisy', 'EQUINE', 6), ('Donald', 'CANINE', 6);
+
+INSERT INTO pet (name, type, owner_id)
+VALUES ('Oliver', 'CANINE', 7), ('Olivia', 'FELINE', 7);
+
+INSERT INTO pet (name, type, owner_id)
+VALUES ('Lucy', 'CANINE', 8), ('Caramelo', 'CANINE', 6);
+
+INSERT INTO pet (name, type, owner_id)
+VALUES ('Leo', 'EQUINE', 9), ('Ferdinandis', 'EQUINE', 9);
+
+INSERT INTO pet (name, type, owner_id)
+VALUES ('Milo', 'CANINE', 10), ('Gal', 'CANINE', 10);
