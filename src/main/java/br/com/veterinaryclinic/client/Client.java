@@ -75,7 +75,6 @@ public class Client implements Serializable {
     private Address address;
 
     @OneToMany(mappedBy = "ownerName")
-    @NonNull
     private List<Pet> pets;
 
 }
