@@ -1,6 +1,7 @@
 package br.com.veterinaryclinic.pet;
 
 import br.com.veterinaryclinic.client.Client;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -49,6 +50,6 @@ public class Pet implements Serializable {
     private AnimalGroupType type;
 
     @ManyToOne(targetEntity = Client.class)
-    @JoinColumn(name = "owner_id")
+    @JoinColumn(name = "owner_id", nullable = false)
     private Client ownerName;
 }

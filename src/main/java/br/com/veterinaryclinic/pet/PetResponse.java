@@ -1,18 +1,10 @@
 package br.com.veterinaryclinic.pet;
 
-import br.com.veterinaryclinic.address.AddressResponse;
-import br.com.veterinaryclinic.client.Client;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import java.time.LocalDate;
-
-//@JsonPropertyOrder({"id", "name", "email", "age"})
-public record PetResponse(
-        Long id,
-        String name,
-        String type,
-        Client owner
-
-) { }
+@JsonPropertyOrder({"id", "name", "type"})
+public record PetResponse(Long id, String name, String type) {
+    public PetResponse(Pet pet) {
+        this(pet.getId(), pet.getPetName(), pet.getType().getAnimalType());
+    }
+}

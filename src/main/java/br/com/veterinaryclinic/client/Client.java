@@ -56,6 +56,10 @@ public class Client implements Serializable {
     private String emailAddress;
 
     @Column(unique = true, nullable = false)
+    @NonNull
+    private String phone;
+
+    @Column(unique = true, nullable = false)
     @NotBlank(message = "CPF cannot be blank.")
     @NotNull(message = "CPF cannot be null.")
     @NonNull
