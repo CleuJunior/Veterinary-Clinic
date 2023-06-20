@@ -1,6 +1,5 @@
 package br.com.veterinaryclinic.client;
 
-import br.com.veterinaryclinic.address.Address;
 import br.com.veterinaryclinic.pet.Pet;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -34,9 +33,20 @@ public record ClientRequest(
         @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd-MM-yyyy")
         LocalDate birthDate,
 
-        @NotBlank(message = "Address cannot be blank.")
-        @NotNull(message = "Address cannot be null.")
-        Address address,
+        @JsonProperty("street_name")
+        @NotBlank(message = "Street cannot be blank.")
+        @NotNull(message = "Street cannot be null.")
+        String streetName,
+
+        @JsonProperty("house_number")
+        @NotBlank(message = "House number cannot be blank.")
+        @NotNull(message = "House number cannot be null.")
+        Integer houseNumber,
+
+        @JsonProperty("zipcode")
+        @NotBlank(message = "Zipcode number cannot be blank.")
+        @NotNull(message = "Zipcode number cannot be null.")
+        String zipcode,
 
         @NotBlank(message = "Pets cannot be blank.")
         @NotNull(message = "Pets cannot be null.")

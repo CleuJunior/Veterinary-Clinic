@@ -1,15 +1,15 @@
 package br.com.veterinaryclinic.client;
 
-import br.com.veterinaryclinic.address.Address;
 import br.com.veterinaryclinic.pet.Pet;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -24,6 +24,7 @@ import lombok.ToString;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -69,12 +70,24 @@ public class Client implements Serializable {
     @NonNull
     private LocalDate birthDate;
 
-    @OneToOne
-    @JoinColumn(name = "address_id")
+
+    @Embedded
     @NonNull
+    @Getter(AccessLevel.PRIVATE)
     private Address address;
 
-    @OneToMany(mappedBy = "ownerName")
+    @OneToMany(targetEntity=Pet.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Pet> pets;
 
+    public String getStreetName() {
+        return this.address.getStreetName();
+    }
+
+    public Integer getHouseNumber() {
+        return this.address.getHouseNumber();
+    }
+
+    public String getZipCode() {
+        return this.address.getZipcode();
+    }
 }
