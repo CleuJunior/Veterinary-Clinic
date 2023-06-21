@@ -70,13 +70,15 @@ public class Client implements Serializable {
     @NonNull
     private LocalDate birthDate;
 
-
     @Embedded
     @NonNull
     @Getter(AccessLevel.PRIVATE)
+    @Setter(AccessLevel.PUBLIC)
     private Address address;
 
-    @OneToMany(targetEntity=Pet.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+//    @OneToMany(targetEntity=Pet.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(targetEntity=Pet.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @NonNull
     private List<Pet> pets;
 
     public String getStreetName() {

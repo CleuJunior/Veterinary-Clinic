@@ -1,6 +1,6 @@
 package br.com.veterinaryclinic.client;
 
-import br.com.veterinaryclinic.pet.Pet;
+import br.com.veterinaryclinic.pet.PetRequest;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
@@ -50,6 +50,6 @@ public record ClientRequest(
 
         @NotBlank(message = "Pets cannot be blank.")
         @NotNull(message = "Pets cannot be null.")
-        List<Pet> pets
+        List<PetRequest> pets
 ) {
 }

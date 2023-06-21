@@ -38,10 +38,10 @@ public class ClientController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-//    @PutMapping("/update/{id}")
-//    public ResponseEntity<ClientResponse> updatePatient(@PathVariable Long id, @RequestBody ClientRequest request) {
-//        ClientResponse response = this.service.updateClient(id, request);
-//        return ResponseEntity.status(HttpStatus.OK).body(response);
-//    }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ClientResponse> updateClient(@PathVariable Long id, @RequestBody ClientRequest request) {
+        ClientResponse response = this.service.updateClient(id, request);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 
 }

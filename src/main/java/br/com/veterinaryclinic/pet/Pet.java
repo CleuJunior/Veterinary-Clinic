@@ -41,6 +41,7 @@ public class Pet implements Serializable {
     private String petName;
 
     @Enumerated(EnumType.STRING)
+    @NonNull
     private AnimalGroupType type;
 
 }
