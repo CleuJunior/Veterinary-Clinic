@@ -1,13 +1,9 @@
-package br.com.veterinaryclinic.address;
+package br.com.veterinaryclinic.client;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +15,7 @@ import lombok.ToString;
 import java.io.Serial;
 import java.io.Serializable;
 
-@Entity
+@Embeddable
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Getter
@@ -30,11 +26,6 @@ public class Address implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
-    private Long id;
 
     @Column(name = "street_name")
     @NonNull
