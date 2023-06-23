@@ -22,7 +22,17 @@ public class PetService {
         return new PetResponse(pet);
     }
 
-    public Pet savePet(Pet pet) {
-        return this.petRepository.save(pet);
+    public PetResponse updatePet(Long id, PetRequest petRequest) {
+        Pet pet = this.petRepository.findById(id).orElse(null);
+        assert pet != null;
+        pet.setPetName(petRequest.petName());
+        pet.setType(petRequest.type());
+        return new PetResponse(pet);
+    }
+
+    public void deletePet(Long id) {
+        Pet pet = this.petRepository.findById(id).orElse(null);
+        assert pet != null;
+        this.petRepository.delete(pet);
     }
 }

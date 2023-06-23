@@ -2,7 +2,6 @@ package br.com.veterinaryclinic.client;
 
 import br.com.veterinaryclinic.pet.Pet;
 import br.com.veterinaryclinic.pet.PetRepository;
-import br.com.veterinaryclinic.pet.PetResponse;
 import br.com.veterinaryclinic.utils.ConverterUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,4 +71,9 @@ public class ClientService {
         return new ClientResponse(client);
     }
 
+    public void deleteClient(Long id) {
+        Client client = this.clientRepository.findById(id).orElse(null);
+        assert client != null;
+        this.clientRepository.delete(client);
+    }
 }
