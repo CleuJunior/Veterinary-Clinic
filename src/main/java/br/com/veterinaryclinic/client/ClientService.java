@@ -1,5 +1,6 @@
 package br.com.veterinaryclinic.client;
 
+import br.com.veterinaryclinic.exceptions.ClientNotFoundException;
 import br.com.veterinaryclinic.pet.Pet;
 import br.com.veterinaryclinic.pet.PetRepository;
 import br.com.veterinaryclinic.utils.ConverterUtils;
@@ -24,8 +25,9 @@ public class ClientService {
     }
 
     public ClientResponse findPatientById(Long id) {
-        Client client = this.clientRepository.findById(id).orElse(null);
-        assert client != null;
+        Client client = this.clientRepository.findById(id)
+                .orElseThrow(() -> new ClientNotFoundException(id));
+
         return new ClientResponse(client);
     }
 
