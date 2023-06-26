@@ -1,5 +1,6 @@
 package br.com.veterinaryclinic.pet;
 
+import br.com.veterinaryclinic.exceptions.PetNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +21,6 @@ class PetServiceTest {
 
     @InjectMocks
     private PetService service;
-
     @Mock
     private PetRepository repository;
 
@@ -38,9 +38,7 @@ class PetServiceTest {
 
         Mockito.when(this.repository.findAll(pageable)).thenReturn(petPage);
 
-        PetService petService = new PetService(this.repository);
-
-        Page<PetResponse> actual = petService.listAllPets(pageable);
+        Page<PetResponse> actual = this.service.listAllPets(pageable);
         List<PetResponse> petResponses = actual.getContent();
 
         // Assertions
@@ -70,18 +68,24 @@ class PetServiceTest {
     }
 
     @Test
-    void shouldDeletePetById() {
+    void shouldDeletePetByIdWhenCallingDeleteById() {
         Long petId = 1L;
         Pet pet = new Pet("Max", AnimalGroupType.CANINE);
 
         Mockito.when(this.repository.findById(petId)).thenReturn(Optional.of(pet));
         Mockito.doNothing().when(this.repository).delete(pet);
 
-        PetService petService = new PetService(this.repository);
-        petService.deletePet(petId);
+        this.service.deletePetById(petId);
 
         Mockito.verify(this.repository).findById(petId);
         Mockito.verify(this.repository).delete(pet);
         Mockito.verifyNoMoreInteractions(this.repository);
+    }
+
+    @Test
+    void shouldThrowPetNotFoundExceptionWhenPetNotFound() {
+        Long petId = 1L;
+        Mockito.when(this.repository.findById(petId)).thenReturn(Optional.empty());
+        Assertions.assertThrows(PetNotFoundException.class, () -> this.service.findPetById(petId));
     }
 }
