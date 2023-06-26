@@ -29,7 +29,7 @@ public class PetService {
         return new PetResponse(pet);
     }
 
-    public void deletePet(Long id) {
+    public void deletePetById(Long id) {
         Pet pet = this.petRepository.findById(id).orElseThrow(() -> new PetNotFoundException(id));
         this.petRepository.delete(pet);
     }

@@ -38,7 +38,7 @@ public class PetController {
 
     @DeleteMapping("delete/{id}")
     public ResponseEntity<Void> deletePetById(@PathVariable Long id) {
-        this.service.deletePet(id);
+        this.service.deletePetById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
