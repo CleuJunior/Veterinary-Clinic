@@ -1,6 +1,7 @@
 package br.com.veterinaryclinic.client;
 
 import br.com.veterinaryclinic.exceptions.ClientNotFoundException;
+import br.com.veterinaryclinic.exceptions.PetNotFoundException;
 import br.com.veterinaryclinic.pet.Pet;
 import br.com.veterinaryclinic.pet.PetRepository;
 import br.com.veterinaryclinic.utils.ConverterUtils;
@@ -24,10 +25,8 @@ public class ClientService {
         return this.clientRepository.findAll(pageable).map(ClientResponse::new);
     }
 
-    public ClientResponse findPatientById(Long id) {
-        Client client = this.clientRepository.findById(id)
-                .orElseThrow(() -> new ClientNotFoundException(id));
-
+    public ClientResponse findClientById(Long id) {
+        Client client = this.clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException(id));
         return new ClientResponse(client);
     }
 
@@ -46,14 +45,15 @@ public class ClientService {
     }
 
     public ClientResponse updateClient(Long id, ClientRequest request) {
-        Client client = this.clientRepository.findById(id).orElse(null);
-        assert client != null;
+        Client client = this.clientRepository.findById(id)
+                .orElseThrow(() -> new ClientNotFoundException(id));
 
         List<Pet> pets = new ArrayList<>();
 
         for (int i = 0; i < client.getPets().size(); i++) {
-            Pet petUpdate = this.petRepository.findById(client.getPets().get(i).getId()).orElse(null);
-            assert petUpdate != null;
+            Long petId = client.getPets().get(i).getId();
+            Pet petUpdate = this.petRepository.findById(petId)
+                    .orElseThrow(() -> new PetNotFoundException(petId));
 
             petUpdate.setPetName(request.pets().get(i).petName());
             petUpdate.setType(request.pets().get(i).type());
@@ -74,8 +74,9 @@ public class ClientService {
     }
 
     public void deleteClient(Long id) {
-        Client client = this.clientRepository.findById(id).orElse(null);
-        assert client != null;
+        Client client = this.clientRepository.findById(id)
+                .orElseThrow(() -> new ClientNotFoundException(id));
+
         this.clientRepository.delete(client);
     }
 }
