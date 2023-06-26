@@ -73,7 +73,7 @@ public class ClientService {
         return new ClientResponse(client);
     }
 
-    public void deleteClient(Long id) {
+    public void deleteClientById(Long id) {
         Client client = this.clientRepository.findById(id)
                 .orElseThrow(() -> new ClientNotFoundException(id));
 
