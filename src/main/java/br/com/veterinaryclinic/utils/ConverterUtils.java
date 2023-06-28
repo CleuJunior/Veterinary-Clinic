@@ -13,9 +13,9 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ConverterUtils {
 
-    public static Client toClient(ClientRequest client, List<Pet> pets, Address address) {
+    public static Client toClient(ClientRequest client, List<Pet> pets, Address address, String encodedPassword) {
         return new Client(client.name(), client.emailAddress(), client.phone(), client.cpf(), client.birthDate(),
-                address, pets, client.userName(), client.password(), client.role());
+                address, pets, client.userName(), encodedPassword, client.role());
     }
 
     public static Pet toPet(PetRequest petRequest) {

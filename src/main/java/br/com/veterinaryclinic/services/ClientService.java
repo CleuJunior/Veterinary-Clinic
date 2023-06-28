@@ -14,6 +14,11 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,6 +30,8 @@ import java.util.List;
 public class ClientService {
     private final ClientRepository clientRepository;
     private final PetRepository petRepository;
+    private final AuthenticationManager authenticationManager;
+
 
     public Page<ClientResponse> listAllClients(Pageable pageable) {
         return this.clientRepository.findAll(pageable).map(ClientResponse::new);
@@ -36,13 +43,15 @@ public class ClientService {
     }
 
     public ClientResponse insertNewClient(ClientRequest request) {
+        String encryptedPassword = new BCryptPasswordEncoder().encode(request.password());
+
         List<Pet> pets = request.pets()
                 .stream()
                 .map(ConverterUtils::toPet)
                 .toList();
 
         pets = this.petRepository.saveAll(pets);
-        Client client = ConverterUtils.toClient(request, pets, request.address());
+        Client client = ConverterUtils.toClient(request, pets, request.address(), encryptedPassword);
         client = this.clientRepository.save(client);
 
         this.petRepository.saveAll(pets);

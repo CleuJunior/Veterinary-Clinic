@@ -10,14 +10,16 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.time.LocalDate;
 import java.util.List;
 
-@JsonPropertyOrder({"id", "name", "email", "phone"})
+@JsonPropertyOrder({"id", "name", "birth_date", "phone", "email", "username", "role", "password"})
 public record ClientResponse(Long id, String name, @JsonProperty("email") String emailAddress, String phone,
-                             @JsonProperty("birth_date") @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd-MM-yyyy") LocalDate birthDate,
+                             @JsonProperty("birth_date")
+                             @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd-MM-yyyy")
+                             LocalDate birthDate,
                              Address address, List<PetResponse> pets, String username, String password, Role role) {
 
         public ClientResponse(Client client) {
                 this(client.getId(), client.getName(), client.getEmailAddress(), client.getPhone(), client.getBirthDate(),
-                        client.getAddress(), client.getPets().stream().map(PetResponse::new).toList(), client.getUsername(),
-                        client.getPassword(), client.getRole());
+                        client.getAddress(), client.getPets().stream().map(PetResponse::new).toList(),
+                        client.getUsername(), client.getPassword(), client.getRole());
         }
 }
