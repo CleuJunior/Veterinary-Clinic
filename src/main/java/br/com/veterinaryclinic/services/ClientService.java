@@ -1,9 +1,14 @@
-package br.com.veterinaryclinic.client;
+package br.com.veterinaryclinic.services;
 
+import br.com.veterinaryclinic.entities.Client;
+import br.com.veterinaryclinic.repositories.ClientRepository;
+import br.com.veterinaryclinic.dtos.ClientRequest;
+import br.com.veterinaryclinic.dtos.ClientResponse;
+import br.com.veterinaryclinic.entities.Address;
 import br.com.veterinaryclinic.exceptions.ClientNotFoundException;
 import br.com.veterinaryclinic.exceptions.PetNotFoundException;
-import br.com.veterinaryclinic.pet.Pet;
-import br.com.veterinaryclinic.pet.PetRepository;
+import br.com.veterinaryclinic.entities.Pet;
+import br.com.veterinaryclinic.repositories.PetRepository;
 import br.com.veterinaryclinic.utils.ConverterUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +42,7 @@ public class ClientService {
                 .toList();
 
         pets = this.petRepository.saveAll(pets);
-        Client client = ConverterUtils.toClient(request, pets);
+        Client client = ConverterUtils.toClient(request, pets, request.address());
         client = this.clientRepository.save(client);
 
         this.petRepository.saveAll(pets);
@@ -65,7 +70,7 @@ public class ClientService {
         client.setPhone(request.phone());
         client.setCpf(request.cpf());
         client.setBirthDate(request.birthDate());
-        client.setAddress(new Address(request.streetName(), request.houseNumber(), request.zipcode()));
+//        client.setAddress(new Address(request.streetName(), request.houseNumber(), request.zipcode()));
         client.setPets(pets);
 
         this.clientRepository.save(client);

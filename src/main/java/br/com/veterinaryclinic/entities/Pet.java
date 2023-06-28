@@ -1,5 +1,6 @@
-package br.com.veterinaryclinic.pet;
+package br.com.veterinaryclinic.entities;
 
+import br.com.veterinaryclinic.enums.AnimalGroupType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

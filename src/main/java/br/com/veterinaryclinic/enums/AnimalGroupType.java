@@ -1,4 +1,4 @@
-package br.com.veterinaryclinic.pet;
+package br.com.veterinaryclinic.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

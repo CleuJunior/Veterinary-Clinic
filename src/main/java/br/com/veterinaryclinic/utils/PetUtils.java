@@ -1,6 +1,6 @@
 package br.com.veterinaryclinic.utils;
 
-import br.com.veterinaryclinic.pet.Pet;
+import br.com.veterinaryclinic.entities.Pet;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

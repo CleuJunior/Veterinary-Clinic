@@ -1,5 +1,8 @@
-package br.com.veterinaryclinic.pet;
+package br.com.veterinaryclinic.controllers;
 
+import br.com.veterinaryclinic.dtos.PetRequest;
+import br.com.veterinaryclinic.dtos.PetResponse;
+import br.com.veterinaryclinic.services.PetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

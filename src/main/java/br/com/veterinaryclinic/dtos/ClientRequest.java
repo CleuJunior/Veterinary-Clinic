@@ -1,6 +1,8 @@
-package br.com.veterinaryclinic.client;
+package br.com.veterinaryclinic.dtos;
 
-import br.com.veterinaryclinic.pet.PetRequest;
+import br.com.veterinaryclinic.entities.Address;
+import br.com.veterinaryclinic.entities.Pet;
+import br.com.veterinaryclinic.enums.Role;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
@@ -33,23 +35,24 @@ public record ClientRequest(
         @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd-MM-yyyy")
         LocalDate birthDate,
 
-        @JsonProperty("street_name")
-        @NotBlank(message = "Street cannot be blank.")
-        @NotNull(message = "Street cannot be null.")
-        String streetName,
-
-        @JsonProperty("house_number")
-        @NotBlank(message = "House number cannot be blank.")
-        @NotNull(message = "House number cannot be null.")
-        Integer houseNumber,
-
-        @JsonProperty("zipcode")
-        @NotBlank(message = "Zipcode number cannot be blank.")
-        @NotNull(message = "Zipcode number cannot be null.")
-        String zipcode,
+        @NotBlank(message = "Address cannot be blank.")
+        @NotNull(message = "Address cannot be null.")
+        Address address,
 
         @NotBlank(message = "Pets cannot be blank.")
         @NotNull(message = "Pets cannot be null.")
-        List<PetRequest> pets
+        List<PetRequest> pets,
+
+        @NotBlank(message = "Username cannot be blank.")
+        @NotNull(message = "Username cannot be null.")
+        String userName,
+
+        @NotBlank(message = "Password cannot be blank.")
+        @NotNull(message = "Password cannot be null.")
+        String password,
+
+        @NotBlank(message = "Role cannot be blank.")
+        @NotNull(message = "Role1 cannot be null.")
+        Role role
 ) {
 }

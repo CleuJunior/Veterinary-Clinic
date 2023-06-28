@@ -1,5 +1,6 @@
-package br.com.veterinaryclinic.pet;
+package br.com.veterinaryclinic.dtos;
 
+import br.com.veterinaryclinic.entities.Pet;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonPropertyOrder({"id", "name", "type"})

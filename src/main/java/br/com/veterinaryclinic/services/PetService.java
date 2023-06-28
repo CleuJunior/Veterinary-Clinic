@@ -1,6 +1,10 @@
-package br.com.veterinaryclinic.pet;
+package br.com.veterinaryclinic.services;
 
+import br.com.veterinaryclinic.entities.Pet;
 import br.com.veterinaryclinic.exceptions.PetNotFoundException;
+import br.com.veterinaryclinic.repositories.PetRepository;
+import br.com.veterinaryclinic.dtos.PetRequest;
+import br.com.veterinaryclinic.dtos.PetResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
