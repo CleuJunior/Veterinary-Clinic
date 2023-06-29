@@ -1,10 +1,12 @@
 package br.com.veterinaryclinic.controllers;
 
+import br.com.veterinaryclinic.config.sercutiry.TokenService;
 import br.com.veterinaryclinic.dtos.AuthenticationRequest;
 import br.com.veterinaryclinic.dtos.RegisterRequest;
+import br.com.veterinaryclinic.dtos.TokenResponse;
+import br.com.veterinaryclinic.entities.Client;
 import br.com.veterinaryclinic.repositories.ClientRepository;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,17 +19,31 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/v1/auth")
-@RequiredArgsConstructor
 public class AuthController {
     private final AuthenticationManager authenticationManager;
+
+    public AuthController(AuthenticationManager authenticationManager, ClientRepository clientRepository,
+                          TokenService tokenService) {
+
+        this.authenticationManager = authenticationManager;
+        this.clientRepository = clientRepository;
+        this.tokenService = tokenService;
+    }
+
     private final ClientRepository clientRepository;
+    private final TokenService tokenService;
 
     @PostMapping(value = "/login")
-    public ResponseEntity<Void> login(@RequestBody @Valid AuthenticationRequest request) {
-        UsernamePasswordAuthenticationToken usernamePassword = new  UsernamePasswordAuthenticationToken(request.login(), request.password());
-        Authentication auth = this.authenticationManager.authenticate(usernamePassword);
+    public ResponseEntity<TokenResponse> login(@RequestBody @Valid AuthenticationRequest request) {
+        UsernamePasswordAuthenticationToken usernamePassword = new  UsernamePasswordAuthenticationToken(request.login(),
+                request.password());
 
-        return ResponseEntity.ok().build();
+        System.out.println(this.clientRepository.findAll());
+
+        Authentication auth = this.authenticationManager.authenticate(usernamePassword);
+        String token = this.tokenService.generateToken((Client) auth.getPrincipal());
+
+        return ResponseEntity.ok(new TokenResponse(token));
     }
 
     @PostMapping("/register")
@@ -37,6 +53,8 @@ public class AuthController {
         }
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(request.password());
+
+//        this.clientRepository.save();
 
         return ResponseEntity.ok().build();
     }

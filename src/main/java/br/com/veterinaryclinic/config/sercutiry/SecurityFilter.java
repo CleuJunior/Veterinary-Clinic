@@ -5,8 +5,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,12 +14,16 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 @Component
-@RequiredArgsConstructor
 public class SecurityFilter extends OncePerRequestFilter {
     private final TokenService tokenService;
     private final ClientRepository clientRepository;
     private static final String HEADER = "Authorization";
-    
+
+    public SecurityFilter(TokenService tokenService, ClientRepository clientRepository) {
+        this.tokenService = tokenService;
+        this.clientRepository = clientRepository;
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -34,7 +36,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         String subject =  this.tokenService.validateToken(token);
         UserDetails client = this.clientRepository.findByUsername(subject);
-        AbstractAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(client, null,
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(client, null,
                 client.getAuthorities());
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -42,6 +44,6 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     private String recoverToken(HttpServletRequest request) {
         String authHeader = request.getHeader(HEADER);
-        return (authHeader != null) ? authHeader.replace("Bearer", "") : null;
+        return (authHeader != null) ? authHeader.replace("Bearer ", "") : null;
     }
 }

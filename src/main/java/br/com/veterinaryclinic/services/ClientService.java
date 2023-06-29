@@ -1,23 +1,18 @@
 package br.com.veterinaryclinic.services;
 
-import br.com.veterinaryclinic.entities.Client;
-import br.com.veterinaryclinic.repositories.ClientRepository;
 import br.com.veterinaryclinic.dtos.ClientRequest;
 import br.com.veterinaryclinic.dtos.ClientResponse;
-import br.com.veterinaryclinic.entities.Address;
+import br.com.veterinaryclinic.entities.Client;
+import br.com.veterinaryclinic.entities.Pet;
 import br.com.veterinaryclinic.exceptions.ClientNotFoundException;
 import br.com.veterinaryclinic.exceptions.PetNotFoundException;
-import br.com.veterinaryclinic.entities.Pet;
+import br.com.veterinaryclinic.repositories.ClientRepository;
 import br.com.veterinaryclinic.repositories.PetRepository;
 import br.com.veterinaryclinic.utils.ConverterUtils;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +21,15 @@ import java.util.List;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class ClientService {
+    public ClientService(ClientRepository clientRepository, PetRepository petRepository,
+                         AuthenticationManager authenticationManager) {
+
+        this.clientRepository = clientRepository;
+        this.petRepository = petRepository;
+        this.authenticationManager = authenticationManager;
+    }
+
     private final ClientRepository clientRepository;
     private final PetRepository petRepository;
     private final AuthenticationManager authenticationManager;

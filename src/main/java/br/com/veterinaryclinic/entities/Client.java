@@ -1,45 +1,36 @@
 package br.com.veterinaryclinic.entities;
 
 import br.com.veterinaryclinic.enums.Role;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.lang.NonNull;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
+import java.util.StringJoiner;
 
 @Entity
-@NoArgsConstructor
-@RequiredArgsConstructor
-@Data
-public class Client implements Serializable, UserDetails {
+public class Client extends User implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
     private Long id;
-
-    @Column(nullable = false)
-    @NotBlank(message = "Name cannot be blank.")
-    @NotNull(message = "Name cannot be null.")
-    @NonNull
-    private String name;
-
-    @Column(name = "email", unique = true, nullable = false)
-    @NotBlank(message = "Email cannot be blank.")
-    @NotNull(message = "Email cannot be null.")
-    @NonNull
-    private String emailAddress;
 
     @Column(unique = true, nullable = false)
     @NonNull
@@ -65,49 +56,100 @@ public class Client implements Serializable, UserDetails {
     @NonNull
     private List<Pet> pets;
 
+    public Client(
+            @NotNull(message = "Name cannot be null.") String name,
+            @NotNull(message = "Email cannot be null.") String emailAddress,
+            @NotNull(message = "Username cannot be null.") String username,
+            @NotNull(message = "Password cannot be null.") String password,
+            @NonNull Role role,
+            @NonNull String phone,
+            @NotNull(message = "CPF cannot be null.") String cpf,
+            @NonNull LocalDate birthDate,
+            @NonNull Address address,
+            @NonNull List<Pet> pets) {
+
+        super(name, emailAddress, username, password, role);
+        this.phone = phone;
+        this.cpf = cpf;
+        this.birthDate = birthDate;
+        this.address = address;
+        this.pets = pets;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
     @NonNull
-    @NotBlank(message = "Username cannot be blank.")
-    @NotNull(message = "Username cannot be null.")
-    private String username;
+    public String getPhone() {
+        return this.phone;
+    }
+
+    public void setPhone(@NonNull String phone) {
+        this.phone = phone;
+    }
 
     @NonNull
-    @NotBlank(message = "Password cannot be blank.")
-    @NotNull(message = "Password cannot be null.")
-    private String password;
+    public String getCpf() {
+        return this.cpf;
+    }
 
-    @Enumerated(EnumType.STRING)
+    public void setCpf(@NonNull String cpf) {
+        this.cpf = cpf;
+    }
+
     @NonNull
-    private Role role;
+    public LocalDate getBirthDate() {
+        return this.birthDate;
+    }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (this.role == Role.ADMIN) {
-            return List.of(
-                    new SimpleGrantedAuthority("ROLE_ADMIN"),
-                    new SimpleGrantedAuthority("ROLE_USER")
-            );
-        }
+    public void setBirthDate(@NonNull LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
 
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    @NonNull
+    public Address getAddress() {
+        return this.address;
+    }
+
+    public void setAddress(@NonNull Address address) {
+        this.address = address;
+    }
+
+    @NonNull
+    public List<Pet> getPets() {
+        return this.pets;
+    }
+
+    public void setPets(@NonNull List<Pet> pets) {
+        this.pets = pets;
     }
 
     @Override
-    public boolean isAccountNonExpired() {
-        return true;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Client client)) return false;
+        if (!super.equals(o)) return false;
+        return Objects.equals(id, client.id);
     }
 
     @Override
-    public boolean isAccountNonLocked() {
-        return true;
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), id);
     }
 
     @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
+    public String toString() {
+        return new StringJoiner(", ", "Client" + "[", "]")
+                .add("id=" + this.id)
+                .add("name=" + super.name)
+                .add("username=" + super.username)
+                .add("role=" + super.role)
+                .add("birthDate=" + this.birthDate)
+                .add("cpf=" + this.cpf)
+                .add("emailAddress=" + super.emailAddress)
+                .add("address=" + this.address)
+                .add("pets=" + this.pets)
+                .toString();
     }
 }

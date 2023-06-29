@@ -1,6 +1,5 @@
 package br.com.veterinaryclinic.config.sercutiry;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -16,12 +15,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class SecurityConfig {
     private final SecurityFilter securityFilter;
     private static final SessionCreationPolicy STATELESS = SessionCreationPolicy.STATELESS;
-    private static final String CLIENT_URL = "/client";
+    private static final String CLIENT_URL = "/api/v1/client";
+    private static final String AUTH_REGISTER = "/api/v1/auth/register";
+    private static final String AUTH_LOGIN = "/api/v1/auth/login";
     private static final String ADMIN_ROLE = "ADMIN";
+
+    public SecurityConfig(SecurityFilter securityFilter) {
+        this.securityFilter = securityFilter;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity security) throws Exception {
@@ -29,8 +33,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, CLIENT_URL).permitAll()
-                        .requestMatchers(HttpMethod.POST, CLIENT_URL).permitAll()
+                        .requestMatchers("/h2-console/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, AUTH_LOGIN).permitAll()
+                        .requestMatchers(HttpMethod.POST, AUTH_REGISTER).permitAll()
                         .requestMatchers(HttpMethod.POST, CLIENT_URL).hasRole(ADMIN_ROLE).anyRequest().authenticated()
                 )
                 .addFilterBefore(this.securityFilter, UsernamePasswordAuthenticationFilter.class)
