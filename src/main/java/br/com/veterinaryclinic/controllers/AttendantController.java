@@ -5,9 +5,9 @@ import br.com.veterinaryclinic.dtos.AuthenticationRequest;
 import br.com.veterinaryclinic.dtos.RegisterRequest;
 import br.com.veterinaryclinic.dtos.TokenResponse;
 import br.com.veterinaryclinic.entities.Attendant;
-import br.com.veterinaryclinic.entities.Client;
 import br.com.veterinaryclinic.repositories.AttendantRepository;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -34,30 +34,32 @@ public class AttendantController {
         this.tokenService = tokenService;
     }
 
-    @PostMapping(value = "/login")
+    @PostMapping(value = "/username")
     public ResponseEntity<TokenResponse> login(@RequestBody @Valid AuthenticationRequest request) {
-        UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(request.login(),
+        UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(request.username(),
                 request.password());
 
         Authentication auth = this.authenticationManager.authenticate(usernamePassword);
         String token = this.tokenService.generateToken((UserDetails) auth.getPrincipal());
 
-        return ResponseEntity.ok(new TokenResponse(token));
+        System.out.println("DENTRO DA API");
+        System.out.println(token);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new TokenResponse(token));
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Void> register(@RequestBody @Valid RegisterRequest request) {
+    public ResponseEntity<Attendant> register(@RequestBody @Valid RegisterRequest request) {
         if (this.attendantRepository.findByUsername(request.username()) != null) {
             return ResponseEntity.badRequest().build();
         }
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(request.password());
 
-        Attendant atte = new Attendant(request.name(), request.emailAddress(),
-                request.username(), request.password(), request.role(), request.badgeNumber());
+        Attendant atte = new Attendant(request.name(), request.emailAddress(), request.username(), encryptedPassword,
+                request.role(), request.badgeNumber());
 
         this.attendantRepository.save(atte);
-
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(atte);
     }
 }

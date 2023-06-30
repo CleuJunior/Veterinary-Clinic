@@ -1,6 +1,6 @@
 package br.com.veterinaryclinic.config.sercutiry;
 
-import br.com.veterinaryclinic.repositories.ClientRepository;
+import br.com.veterinaryclinic.repositories.AttendantRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,12 +16,12 @@ import java.io.IOException;
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
     private final TokenService tokenService;
-    private final ClientRepository clientRepository;
+    private final AttendantRepository attendantRepository;
     private static final String HEADER = "Authorization";
 
-    public SecurityFilter(TokenService tokenService, ClientRepository clientRepository) {
+    public SecurityFilter(TokenService tokenService, AttendantRepository attendantRepository) {
         this.tokenService = tokenService;
-        this.clientRepository = clientRepository;
+        this.attendantRepository = attendantRepository;
     }
 
     @Override
@@ -35,11 +35,11 @@ public class SecurityFilter extends OncePerRequestFilter {
         }
 
         String subject =  this.tokenService.validateToken(token);
-//        UserDetails client = this.clientRepository.findByUsername(subject);
-//        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(client, null,
-//                client.getAuthorities());
-//
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
+        UserDetails client = this.attendantRepository.findByUsername(subject);
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(client, null,
+                client.getAuthorities());
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
     private String recoverToken(HttpServletRequest request) {

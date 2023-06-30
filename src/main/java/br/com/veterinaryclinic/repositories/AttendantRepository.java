@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AttendantRepository extends JpaRepository<Attendant, Long> {
-    UserDetails findByUsername(String login);
+    UserDetails findByUsername(String username);
 }
