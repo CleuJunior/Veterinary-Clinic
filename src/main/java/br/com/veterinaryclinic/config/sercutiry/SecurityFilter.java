@@ -35,11 +35,11 @@ public class SecurityFilter extends OncePerRequestFilter {
         }
 
         String subject =  this.tokenService.validateToken(token);
-        UserDetails client = this.clientRepository.findByUsername(subject);
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(client, null,
-                client.getAuthorities());
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+//        UserDetails client = this.clientRepository.findByUsername(subject);
+//        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(client, null,
+//                client.getAuthorities());
+//
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
     private String recoverToken(HttpServletRequest request) {

@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -19,13 +20,13 @@ public class TokenService {
     private String secret;
     private static final Instant EXPIRATION_DATE = LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
 
-    public String generateToken(Client client) {
+    public String generateToken(UserDetails userDetails) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(this.secret);
 
             return JWT.create()
                     .withIssuer("auth-api")
-                    .withSubject(client.getUsername())
+                    .withSubject(userDetails.getUsername())
                     .withExpiresAt(EXPIRATION_DATE)
                     .sign(algorithm);
 

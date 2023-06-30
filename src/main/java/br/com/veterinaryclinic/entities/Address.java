@@ -32,6 +32,9 @@ public class Address implements Serializable {
     @Column(nullable = false)
     private String zipcode;
 
+    public Address() {
+    }
+
     public Address(
             @NonNull String streetName,
             @NonNull Integer houseNumber,

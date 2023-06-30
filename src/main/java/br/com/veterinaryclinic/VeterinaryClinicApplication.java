@@ -1,7 +1,5 @@
 package br.com.veterinaryclinic;
 
-import br.com.veterinaryclinic.repositories.ClientRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

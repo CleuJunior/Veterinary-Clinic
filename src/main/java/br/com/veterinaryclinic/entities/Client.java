@@ -33,28 +33,25 @@ public class Client extends User implements Serializable {
     private Long id;
 
     @Column(unique = true, nullable = false)
-    @NonNull
     private String phone;
 
     @Column(unique = true, nullable = false)
     @NotBlank(message = "CPF cannot be blank.")
-    @NotNull(message = "CPF cannot be null.")
-    @NonNull
     private String cpf;
 
     @Column(name = "birth_date")
-    @NonNull
     private LocalDate birthDate;
 
     @OneToOne
     @JoinColumn(name = "address_id")
-    @NonNull
     private Address address;
 
     @OneToMany(targetEntity= Pet.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
-    @NonNull
     private List<Pet> pets;
+
+    public Client() {
+    }
 
     public Client(
             @NotNull(message = "Name cannot be null.") String name,

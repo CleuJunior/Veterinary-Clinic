@@ -17,7 +17,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
     private final SecurityFilter securityFilter;
-    private static final SessionCreationPolicy STATELESS = SessionCreationPolicy.STATELESS;
     private static final String CLIENT_URL = "/api/v1/client";
     private static final String AUTH_REGISTER = "/api/v1/auth/register";
     private static final String AUTH_LOGIN = "/api/v1/auth/login";
@@ -31,11 +30,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity security) throws Exception {
         return security
                 .csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/h2-console/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, AUTH_LOGIN).permitAll()
-                        .requestMatchers(HttpMethod.POST, AUTH_REGISTER).permitAll()
+//                        .requestMatchers("/h2-console/**").permitAll()
+//                        .requestMatchers(HttpMethod.POST, AUTH_LOGIN).permitAll()
+//                        .requestMatchers(HttpMethod.POST, AUTH_REGISTER).permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/attendant/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/attendant/login").permitAll()
                         .requestMatchers(HttpMethod.POST, CLIENT_URL).hasRole(ADMIN_ROLE).anyRequest().authenticated()
                 )
                 .addFilterBefore(this.securityFilter, UsernamePasswordAuthenticationFilter.class)

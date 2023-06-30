@@ -4,6 +4,7 @@ import br.com.veterinaryclinic.enums.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.lang.NonNull;
@@ -15,6 +16,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
+@MappedSuperclass
 public abstract class User implements UserDetails {
 
     @Column(nullable = false)

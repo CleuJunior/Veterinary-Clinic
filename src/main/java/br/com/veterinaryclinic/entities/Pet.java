@@ -34,8 +34,7 @@ public class Pet implements Serializable {
     public Pet() {
     }
 
-    public Pet(Long id, @NonNull String petName, @NonNull AnimalGroupType type) {
-        this.id = id;
+    public Pet(@NonNull String petName, @NonNull AnimalGroupType type) {
         this.petName = petName;
         this.type = type;
     }
