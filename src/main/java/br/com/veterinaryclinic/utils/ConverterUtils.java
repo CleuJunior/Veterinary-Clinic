@@ -1,28 +1,21 @@
 package br.com.veterinaryclinic.utils;
 
-import br.com.veterinaryclinic.client.Address;
-import br.com.veterinaryclinic.client.Client;
-import br.com.veterinaryclinic.client.ClientRequest;
-import br.com.veterinaryclinic.pet.Pet;
-import br.com.veterinaryclinic.pet.PetRequest;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import br.com.veterinaryclinic.dtos.ClientRequest;
+import br.com.veterinaryclinic.dtos.PetRequest;
+import br.com.veterinaryclinic.entities.Address;
+import br.com.veterinaryclinic.entities.Client;
+import br.com.veterinaryclinic.entities.Pet;
 
 import java.util.List;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ConverterUtils {
+public final class ConverterUtils {
 
-    public static Client toClient(ClientRequest client, List<Pet> pets) {
-        return new Client(
-                client.name(),
-                client.emailAddress(),
-                client.phone(),
-                client.cpf(),
-                client.birthDate(),
-                new Address(client.streetName(), client.houseNumber(), client.zipcode()),
-                pets
-        );
+    private ConverterUtils() {
+    }
+
+    public static Client toClient(ClientRequest client, List<Pet> pets, Address address, String encodedPassword) {
+        return new Client(client.name(), client.emailAddress(), client.userName(), encodedPassword, client.role(),
+                 client.phone(), client.cpf(), client.birthDate(), address, pets);
     }
 
     public static Pet toPet(PetRequest petRequest) {

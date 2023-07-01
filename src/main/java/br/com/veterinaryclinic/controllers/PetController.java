@@ -1,23 +1,22 @@
-package br.com.veterinaryclinic.pet;
+package br.com.veterinaryclinic.controllers;
 
-import lombok.RequiredArgsConstructor;
+import br.com.veterinaryclinic.dtos.PetRequest;
+import br.com.veterinaryclinic.dtos.PetResponse;
+import br.com.veterinaryclinic.services.PetService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/api/v1/pet")
-@RequiredArgsConstructor
 public class PetController {
     private final PetService service;
+
+    public PetController(PetService service) {
+        this.service = service;
+    }
 
     @GetMapping(value = "/list")
     public ResponseEntity<Page<PetResponse>> listClient(Pageable pageable) {

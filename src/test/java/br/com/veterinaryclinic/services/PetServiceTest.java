@@ -1,6 +1,11 @@
-package br.com.veterinaryclinic.pet;
+package br.com.veterinaryclinic.services;
 
+import br.com.veterinaryclinic.dtos.PetResponse;
+import br.com.veterinaryclinic.entities.Pet;
+import br.com.veterinaryclinic.enums.AnimalGroupType;
 import br.com.veterinaryclinic.exceptions.PetNotFoundException;
+import br.com.veterinaryclinic.repositories.PetRepository;
+import br.com.veterinaryclinic.services.PetService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

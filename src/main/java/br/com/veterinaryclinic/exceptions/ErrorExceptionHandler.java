@@ -14,12 +14,7 @@ public class ErrorExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorInfo> entityNotFound(NotFoundException exception) {
         HttpStatus status = HttpStatus.NOT_FOUND;
-        ErrorInfo err = ErrorInfo.builder()
-                .timestamp(Instant.now())
-                .status(status.value())
-                .message(exception.getMessage())
-                .build();
-
+        ErrorInfo err = new ErrorInfo(Instant.now(), status.value(), exception.getMessage());
         return ResponseEntity.status(status).body(err);
     }
 }
